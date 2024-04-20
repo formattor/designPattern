@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var event = {
+            cache: {},
+            add: function (key, fn) {
+                if (!this.cache[key]) {
+                    this.cache[key] = []
+                }
+                this.cache[key].push(fn)
+            },
+            publisher: function () {
+                let key = Array.prototype.shift.call(arguments);
+                let fns = this.cache[key];
+                if (!fns || fns.length <= 0) {
+                    return false
+                }
+                for (let i = 0, fn; fn = fns[i++];) {
+                    fn.apply(this, arguments)
+                }
+            },
+            remove: function (key, fn) {
+                var fns = this.cache[key];
+                if (!fns) {
+                    return false;
+                }
+                if (!fn) {
+                    fns && (fns.length = 0);
+                }
+                else {
+                    for (var l = fns.length - 1; l >= 0; l--) {
+                        var _fn = fns[l];
+                        if (_fn === fn) {
+                            fns.splice(l, 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        function installEvent(obj) {
+            for (item in event) {
+                obj[item] = event[item]
+            }
+        }
+
+        let salesOffices = {}
+        installEvent(salesOffices);
+
+        salesOffices.add('squareMetter88', function (price) {
+            console.log('price is :', price);
+        })
+
+        salesOffices.add('squareMetter120', fn1 = function (price) {
+            console.log('squareMetter120 price is :', price);
+        })
+
+        salesOffices.remove('squareMetter120', fn1)
+
+        salesOffices.publisher('squareMetter88', 3300)
+        salesOffices.publisher('squareMetter120', 4000)
+    </script>
+</body>
+
+</html>

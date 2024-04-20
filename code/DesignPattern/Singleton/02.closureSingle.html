@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var closureSingleton = function (name) {
+            this.name = name;
+        }
+
+        // 自执行函数运行时直接调用一次，在之后的调用时只执行return时候的方法
+        closureSingleton.createSingleton = (function () {
+            var instance = null;
+            return function (name) {
+                if (!instance) {
+                    instance = new closureSingleton(name)
+                }
+                return instance;
+            }
+        })()
+
+        var s1 = closureSingleton.createSingleton('张与时')
+        var s3 = closureSingleton.createSingleton('张与时3')
+        console.log(s1 === s3);
+
+        // closureSingleton.createSingleton = function () {
+        //     var instance = null;
+        //     return function (name) {
+        //         if (!instance) {
+        //             instance = new closureSingleton(name)
+        //         }
+        //         return instance;
+        //     }
+        // }
+
+        // var s1 = closureSingleton.createSingleton()('张与时')
+        // var s3 = closureSingleton.createSingleton()('张与时3')
+        // console.log(s1 === s3);
+
+        // 不透明，要使用构造函数的方法进行实例化，而非new
+    </script>
+</body>
+
+</html>

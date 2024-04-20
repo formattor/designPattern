@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        publisher = {}
+        publisher.catchList = {}
+
+        publisher.add = function (key, fn) {
+            if (!this.catchList[key]) {
+                this.catchList[key] = []
+            }
+            this.catchList[key].push(fn)
+        }
+
+        publisher.publish = function () {
+            var key = Array.prototype.shift.call(arguments),
+                fns = this.catchList[key];
+            if (!fns || fns.length === 0) {
+                return false
+            }
+            for (var i = 0, fn; fn = fns[i++];) {
+                fn.apply(this, arguments)
+            }
+        }
+
+        publisher.add('xiaohong', function (squareMeter) {
+            console.log('squareMeter:', squareMeter);
+        })
+
+        publisher.add('xiaoming', function (squareMeter) {
+            console.log('squareMeter:', squareMeter);
+        })
+
+        publisher.publish('xiaohong', 80)
+        publisher.publish('xiaoming', 120)
+    </script>
+</body>
+
+</html>

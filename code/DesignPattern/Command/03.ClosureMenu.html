@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="button1">11</button>
+    <button id="button2">22</button>
+    <button id="button3">33</button>
+    <script>
+        var button1 = document.getElementById('button1')
+        var button2 = document.getElementById('button2')
+        var button3 = document.getElementById('button3')
+
+        var setCommand = function (button, command) {
+            // button.onclick = fun;
+            button.onclick = function () {
+                command.execute();
+            }
+        }
+
+        var MenuBar = {
+            refresh: function () {
+                console.log('refresh menu');
+            }
+        }
+
+        var SubMenu = {
+            add: function () {
+                console.log('add sub menu');
+            },
+            del: function () {
+                console.log('del sub menu');
+            }
+        }
+
+        // ****************************
+        RefreshMenuBarCommand = function (receiver) {
+            // return function () {
+            //     receiver.refresh()
+            // }
+            return {
+                execute: function () {
+                    receiver.refresh();
+                }
+            }
+        }
+        var refreshMenuBarCommand = RefreshMenuBarCommand(MenuBar);
+
+        setCommand(button1, refreshMenuBarCommand);
+    </script>
+</body>
+
+</html>

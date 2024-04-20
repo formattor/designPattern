@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var Event = (function () {
+            var caches = {},
+                add,
+                publisher,
+                remove;
+
+            add = function (key, fn) {
+                if (!caches[key]) {
+                    caches[key] = []
+                }
+                caches[key].push(fn)
+            }
+
+            publisher = function () {
+                let key = Array.prototype.shift.call(arguments);
+                let fns = caches[key];
+                if (!fns || fns.length === 0) {
+                    return false;
+                }
+                for (let i = 0, fn; fn = fns[i++];) {
+                    fn.apply(this, arguments);
+                }
+            }
+
+            remove = function (key, fn) {
+                var fns = caches[key];
+                if (!fns) {
+                    return false;
+                }
+                if (!fn) {
+                    fns && (fns.length = 0)
+                } else {
+                    for (let l = fns.length - 1; l >= 0; l--) {
+                        var _fn = fns[l];
+                        if (_fn === fn) {
+                            fns.splice(l, 1)
+                        }
+                    }
+                }
+            }
+
+            return {
+                add,
+                publisher,
+                remove
+            }
+        })()
+
+        Event.add('squareMetter88', function (price) {
+            console.log('price is 88:', price);
+        })
+
+        Event.add('squareMetter22', function (price) {
+            console.log('price is 22:', price);
+        })
+
+        Event.remove('squareMetter88')
+
+        Event.publisher('squareMetter88', 2000)
+        Event.publisher('squareMetter22', 1000)
+    </script>
+</body>
+
+</html>

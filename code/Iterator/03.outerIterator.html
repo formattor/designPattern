@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var Iterator = function (obj) {
+            var current = 0;
+
+            var next = function () {
+                current += 1;
+            }
+
+            var isDone = function () {
+                return current >= obj.length;
+            }
+
+            var getCurrItem = function () {
+                return obj[current]
+            }
+
+            return {
+                next,
+                isDone,
+                getCurrItem,
+                length: obj.length
+            }
+        }
+
+        var compare = function (iter1, iter2) {
+            if (iter1.length !== iter2.length) {
+                throw new Error('different iterator!')
+            }
+            while (!iter1.isDone() && !iter2.isDone()) {
+                if (iter1.getCurrItem() !== iter2.getCurrItem()) {
+                    throw new Error('different value')
+                }
+                iter1.next();
+                iter2.next();
+            }
+            console.log('same iterator');
+        }
+
+        var it1 = Iterator([1, 2, 3])
+        var it2 = Iterator([1, 2, 4])
+        compare(it1, it2)
+    </script>
+</body>
+
+</html>

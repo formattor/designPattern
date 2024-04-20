@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var event = {
+            caches: {},
+            add: function (key, fn) {
+                if (!this.caches[key]) {
+                    this.caches[key] = []
+                }
+                this.caches[key].push(fn)
+            },
+            publisher: function () {
+                let key = Array.prototype.shift.call(arguments);
+                let fns = this.caches[key];
+                if (!fns || fns.length <= 0) {
+                    return false
+                }
+                for (let i = 0, fn; fn = fns[i++]; i++) {
+                    fn.apply(this, arguments);
+                }
+            }
+        }
+
+        // 为对象添加发布订阅功能
+        var installEvent = function (obj) {
+            for (var i in event) {
+                obj[i] = event[i]
+            }
+        }
+
+        var salesOffices = {}
+        installEvent(salesOffices);
+
+        salesOffices.add('squareMetter88', function (price) {
+            console.log('88  price is:', price);
+        })
+
+        salesOffices.add('squareMetter100', function (price) {
+            console.log('100 price is:', price);
+        })
+
+        salesOffices.publisher('squareMetter88', 123456)
+        salesOffices.publisher('squareMetter100', 1111)
+    </script>
+</body>
+
+</html>

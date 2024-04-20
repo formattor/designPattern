@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="button">click me</button>
+</body>
+<script>
+    var MacroCommand = function () {
+        return {
+            commandList: [],
+            add: function (command) {
+                this.commandList.push(command);
+            },
+            execute: function () {
+                for (let i = 0, command; command = this.commandList[i++];) {
+                    command.execute();
+                }
+            }
+        }
+    }
+
+    var openAcCommand = {
+        execute: function () {
+            console.log('open refrigerator');
+        }
+    }
+
+    var openTVCommand = {
+        execute: function () {
+            console.log('open TV');
+        },
+        add: function () {
+            throw new Error('can not add leaf node in leaf obj');
+        }
+    }
+
+    var openSoundCommand = {
+        execute: function () {
+            console.log('open sound');
+        }
+    }
+
+    var macroCommand1 = MacroCommand();
+    macroCommand1.add(openTVCommand);
+    macroCommand1.add(openSoundCommand);
+
+    var closeDoorCommand = {
+        execute: function () {
+            console.log('close the door');
+        }
+    }
+
+    var openPCCommand = {
+        execute: function () {
+            console.log('open PC');
+        }
+    }
+
+    var openQQCommand = {
+        execute: function () {
+            console.log('open QQ');
+        }
+    }
+
+    var macroCommand2 = MacroCommand();
+    macroCommand2.add(closeDoorCommand)
+    macroCommand2.add(openPCCommand)
+    macroCommand2.add(openQQCommand)
+
+    var macroCommand = MacroCommand();
+    macroCommand.add(openAcCommand);
+    macroCommand.add(macroCommand1);
+    macroCommand.add(macroCommand2);
+
+    var setCommand = (function (command) {
+        document.getElementById('button').onclick = function () {
+            command.execute();
+        }
+    })(macroCommand)
+</script>
+
+</html>

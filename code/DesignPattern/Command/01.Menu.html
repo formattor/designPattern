@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="button1">11</button>
+    <button id="button2">22</button>
+    <button id="button3">33</button>
+    <script>
+        var button1 = document.getElementById('button1')
+        var button2 = document.getElementById('button2')
+        var button3 = document.getElementById('button3')
+
+        // 命令接口
+        var setCommand = function (button, command) {
+            button.onclick = function () {
+                command.execute();
+            }
+        }
+
+        // ****************************
+        var MenuBar = {
+            refresh: function () {
+                console.log('refresh menu');
+            }
+        }
+
+        var SubMenu = {
+            add: function () {
+                console.log('add sub menu');
+            },
+            del: function () {
+                console.log('del sub menu');
+            }
+        }
+        //  ***************************
+        var RefreshMenuBarCommand = function (receiver) {
+            this.receiver = receiver;
+        }
+        RefreshMenuBarCommand.prototype.execute = function () {
+            this.receiver.refresh();
+        }
+
+        var AddSubMenuCommand = function (receiver) {
+            this.receiver = receiver;
+        }
+        AddSubMenuCommand.prototype.execute = function () {
+            this.receiver.add();
+        }
+
+        var DelSubMenuCommand = function (receiver) {
+            this.receiver = receiver;
+        }
+        DelSubMenuCommand.prototype.execute = function () {
+            this.receiver.del();
+        }
+        //  ****************************
+        var refreshMenuBarCommand = new RefreshMenuBarCommand(MenuBar);
+        var addSubMenuCommand = new AddSubMenuCommand(SubMenu);
+        var delSubMenuCommand = new DelSubMenuCommand(SubMenu);
+
+        setCommand(button1, refreshMenuBarCommand);
+        setCommand(button2, addSubMenuCommand);
+        setCommand(button3, delSubMenuCommand);
+    </script>
+</body>
+
+</html>

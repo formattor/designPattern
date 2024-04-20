@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        obj = {
+            name: 'zys',
+            age: 20,
+            city: 'sh',
+            company: 'aspentech'
+        }
+
+        var each = function (obj, callback) {
+            function isLength(value) {
+                return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= Number.MAX_SAFE_INTEGER;
+            }
+            function isArrayLike(value) {
+                return value != null && isLength(value.length) && !isFunction(value);
+            }
+
+            var value,
+                i = 0,
+                length = obj.length,
+                isArray = isArrayLike(obj);
+            if (isArray) {
+                for (; i < length; i++) {
+                    value = callback.call(obj[i], i, obj[i]);
+                    if (value === false) {
+                        break;
+                    }
+                }
+            } else {
+                for (i in obj) { // 迭代object 对象
+                    value = callback.call(obj[i], i, obj[i]);
+                    if (value === false) {
+                        break;
+                    }
+                }
+            }
+            return obj;
+        };
+
+        each(obj, function (i, n) {
+            console.log(i, n);
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var strategies = {
+            'A': function (salary) {
+                return salary * 4
+            },
+            'B': function (salary) {
+                return salary * 3
+            },
+            'C': function (salary) {
+                return salary * 2
+            },
+        }
+
+        var calculateSalary = function (level, salary) {
+            return strategies[level](salary)
+        }
+
+        console.log(calculateSalary('A', 2000));
+        console.log(calculateSalary('C', 5000));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 将计算各个薪资的方法写在外边
+        // 
+        // 不过我觉得只解决了1
+        var performaceS = function (salary) {
+            return salary * 4
+        }
+        var performaceA = function (salary) {
+            return salary * 3
+        }
+        var performaceB = function (salary) {
+            return salary * 2
+        }
+        var calculateBonus = function (salary, performanceLevel) {
+            if (performanceLevel == 'S') {
+                return performaceS(salary)
+            }
+            if (performanceLevel == 'A') {
+                return performaceA(salary)
+            }
+            if (performanceLevel == 'B') {
+                return performaceB(salary)
+            }
+        }
+
+        let a = calculateBonus(2000, 'A');
+        let b = calculateBonus(3000, 'S');
+        console.log(a, b);
+    </script>
+</body>
+
+</html>

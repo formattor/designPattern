@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // simple publish-subscribe
+        var publisher = {};
+        publisher.catchList = [];
+
+        publisher.add = function (fn) {
+            this.catchList.push(fn)
+        }
+
+        publisher.publish = function () {
+            for (var i = 0, fn; fn = this.catchList[i++];) {
+                fn.apply(this, arguments)
+            }
+        }
+        // test
+        publisher.add(function (price, squareMeter) {
+            console.log('price:', price);
+            console.log('squareMeter:', squareMeter);
+        })
+
+        // publisher.add(function (price, squareMeter) {
+        //     console.log('price:', price);
+        //     console.log('squareMeter:', squareMeter);
+        // })
+
+        publisher.publish(2000, 80)
+        // publisher.publish(1000, 120)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 缺陷
+        // 1. 所有逻辑都包含在函数内
+        // 2. 不好修改，添加level或修改salary倍数
+        // 3. 复用性差
+        var calculateBonus = function (salary, performanceLevel) {
+            if (performanceLevel == 'S') {
+                return salary * 4;
+            }
+            if (performanceLevel == 'A') {
+                return salary * 3;
+            }
+            if (performanceLevel == 'B') {
+                return salary * 2;
+            }
+        }
+
+        calculateBonus(2000, A);
+        calculateBonus(3000, S);
+    </script>
+</body>
+
+</html>

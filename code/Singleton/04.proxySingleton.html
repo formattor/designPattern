@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var CreateDDD = function (html) {
+            this.html = html;
+            this.init();
+        }
+
+        CreateDDD.prototype.init = function () {
+            var div = document.createElement('div');
+            div.innerHTML = this.html;
+            document.body.appendChild(div);
+        }
+
+        // let s1 = CreateDDD('sss')
+        // console.log(s1);
+
+        var proxyCreateDDD = (function () {
+            var instance = null;
+            return function (html) {
+                if (!instance) {
+                    instance = new CreateDDD(html)
+                }
+                return instance;
+            }
+        })()
+
+        let s1 = new proxyCreateDDD('zzz1')
+        let s2 = new proxyCreateDDD('zzz2')
+        console.log(s1, s2, s1 === s2);
+        // 通过代理模式，将初始化类与单例分开，符合单一职责原则
+    </script>
+</body>
+
+</html>
